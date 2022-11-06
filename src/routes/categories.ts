@@ -9,9 +9,20 @@ const categoriesRepository = new CategoriesRepository();
 categoriesRoutes.post('/', (req, res) => {
   const { name, description } = req.body;
 
-  categoriesRepository.create({ name, description });
+  const categoryAlreadyExists = categoriesRepository.findByName(name);
 
-  return res.status(201).send();
+  if (!categoryAlreadyExists) {
+    categoriesRepository.create({ name, description });
+
+    return res.status(201).json({ message: 'Categoria criado com sucesso' });
+  }
+  return res.json({ error: 'Categoria já está cadastrada' });
+});
+
+categoriesRoutes.get('/', (req, res) => {
+  const all = categoriesRepository.list();
+
+  return res.json({ all });
 });
 
 export { categoriesRoutes };
