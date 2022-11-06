@@ -1,23 +1,24 @@
 import { Router } from 'express';
-import { v4 as uuidV4 } from 'uuid';
+import { Category } from '../model/Category';
 
 const categoriesRoutes = Router();
 
-const categories = [];
+const categories: Category[] = [];
 
 categoriesRoutes.post('/', (req, res) => {
   const { name, description } = req.body;
 
-  const category = {
-    id: uuidV4(),
+  const category = new Category();
+
+  Object.assign(category, {
     name,
     description,
-  };
+    createdAt: new Date(),
+  });
 
   categories.push(category);
 
-  return res.status(201).json({ message: 'Categoria criada com sucesso' });
+  return res.status(201).json({ message: 'Categoria criada com sucesso', category });
 });
 
-// eslint-disable-next-line import/prefer-default-export
 export { categoriesRoutes };
