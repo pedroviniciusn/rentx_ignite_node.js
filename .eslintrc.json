@@ -21,7 +21,7 @@
 				"@typescript-eslint/no-use-before-define": [
 					"error"
 				],
-			"linebreak-style": [ "error", "windows"],
+			"linebreak-style": 0,
 				"lines-between-class-members": [
 					"error",
 					"always",
