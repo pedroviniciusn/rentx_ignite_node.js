@@ -17,28 +17,28 @@
     ],
     "rules": {
 		    "class-methods-use-this": "off",
-			"no-use-before-define": "off",
-			"@typescript-eslint/no-use-before-define": [
-				"error"
-			],
-			"linebreak-style": ["error",  "windows"],
-			"lines-between-class-members": [
+				"no-use-before-define": "off",
+				"@typescript-eslint/no-use-before-define": [
+					"error"
+				],
+			"linebreak-style": [ "error", "windows"],
+				"lines-between-class-members": [
+					"error",
+					"always",
+					{ "exceptAfterSingleLine": true }
+				],
+				"import/prefer-default-export": "off",
+				"no-console": "off",
+				"no-useless-constructor": "off",
+				"@typescript-eslint/no-useless-constructor": "warn",
+				"import/extensions": [
 				"error",
-				"always",
-				{ "exceptAfterSingleLine": true }
-			],
-			"import/prefer-default-export": "off",
-			"no-console": "off",
-			"no-useless-constructor": "off",
-			"@typescript-eslint/no-useless-constructor": "warn",
-			"import/extensions": [
-			"error",
-			"ignorePackages",
-			{
-				"ts": "never"
-			}
-			]
-			},
+				"ignorePackages",
+				{
+					"ts": "never"
+				}
+				]
+		},
 	  "settings": {
 	    "import/resolver": {
 	      "typescript": {}
