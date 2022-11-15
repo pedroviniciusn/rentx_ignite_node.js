@@ -11,6 +11,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(router);
 
-const port = 8080;
+const port = 3333;
 
 app.listen(port, () => console.log(`Server is listening in port ${port}`));
