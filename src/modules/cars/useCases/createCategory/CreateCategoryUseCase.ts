@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+import { AppError } from '../../../../errors/AppError';
 import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
 
 interface IRequest {
@@ -17,7 +18,7 @@ class CreateCategoryUseCase {
     const categoryAlreadyExists = await this.categoriesRepository.findByName(name);
 
     if (categoryAlreadyExists) {
-      throw new Error('Categoria já está cadastrada');
+      throw new AppError('Categoria já está cadastrada');
     }
 
     this.categoriesRepository.create({ name, description });
