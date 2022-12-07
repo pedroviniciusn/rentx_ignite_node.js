@@ -1,9 +1,18 @@
-import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
+import { AppError } from '@errors/AppError';
+
+import { ICreateUserDTO } from '@modules/accounts/dtos/ICreateUserDTO';
+
 import {
   UserRepositoryInMemory,
-} from '../../repositories/implementations/in-memory/UserRepositoryInMemory';
-import { CreateUserUseCase } from '../createUser/CreateUserUseCase';
-import { AuthenticateUserUseCase } from './AuthenticateUserUseCase';
+} from '@modules/accounts/repositories/in-memory/UserRepositoryInMemory';
+
+import {
+  CreateUserUseCase,
+} from '@modules/accounts/useCases/createUser/CreateUserUseCase';
+
+import {
+  AuthenticateUserUseCase,
+} from '@modules/accounts/useCases/authenticateUser/AuthenticateUserUseCase';
 
 let userRepositoryInMemory: UserRepositoryInMemory;
 let authenticateUserUseCase: AuthenticateUserUseCase;
@@ -32,5 +41,32 @@ describe('Authenticate User', () => {
     });
 
     expect(result).toHaveProperty('token');
+  });
+
+  it('shoul not be able to authenticate an nonexistent user', () => {
+    expect(async () => {
+      await authenticateUserUseCase.execute({
+        email: 'teste@teste.com',
+        password: '123456',
+      });
+    }).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to authenticate with incorrect password', () => {
+    expect(async () => {
+      const user: ICreateUserDTO = {
+        name: 'User test',
+        email: 'test@test.com',
+        password: '123456',
+        driverLicense: '001002',
+      };
+
+      await createUserUseCase.execute(user);
+
+      await authenticateUserUseCase.execute({
+        email: user.email,
+        password: '010101',
+      });
+    }).rejects.toBeInstanceOf(AppError);
   });
 });

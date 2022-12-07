@@ -1,9 +1,10 @@
-import { Category } from '../entities/Category';
+import {
+  ICreteCategoryDTO,
+} from '@modules/cars/dtos/ICreateCategoryDTO';
 
-interface ICreteCategoryDTO {
-    name: string,
-    description: string,
-}
+import {
+  Category,
+} from '@modules/cars/entities/Category';
 
 interface ICategoriesRepository {
     findByName(name: string): Promise<Category>;
@@ -11,4 +12,4 @@ interface ICategoriesRepository {
     create({ name, description }: ICreteCategoryDTO): Promise<void>;
 }
 
-export { ICategoriesRepository, ICreteCategoryDTO };
+export { ICategoriesRepository };
