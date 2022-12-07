@@ -1,22 +1,29 @@
+/* eslint-disable import/order */
 import 'reflect-metadata';
 import express, {
   NextFunction,
   Request,
   Response,
 } from 'express';
+
 import 'express-async-errors';
+
 import swaggerUi from 'swagger-ui-express';
 
 import { router } from './routes';
+
 import swaggerFile from './swagger.json';
 
 import './database';
-import './shared/container';
-import { AppError } from './errors/AppError';
+
+import '@shared/container';
+
+import { AppError } from '@errors/AppError';
 
 const app = express();
 
 app.use(express.json());
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(router);
