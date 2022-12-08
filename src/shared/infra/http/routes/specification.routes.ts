@@ -6,7 +6,7 @@ import {
 
 import {
   ensureAuthenticated,
-} from '@middlewares/ensureAuthenticated';
+} from '@shared/infra/http/middlewares/ensureAuthenticated';
 
 const specificationsRoutes = Router();
 

@@ -6,7 +6,7 @@ import {
 
 import {
   UserRepository,
-} from '@modules/accounts/repositories/implementations/UserRepository';
+} from '@modules/accounts/infra/typeorm/repositories/UserRepository';
 
 import {
   ICategoriesRepository,
@@ -14,11 +14,11 @@ import {
 
 import {
   CategoriesRepository,
-} from '@modules/cars/repositories/implementations/CategoriesRepository';
+} from '@modules/cars/infra/typeorm/repositories/CategoriesRepository';
 
 import {
   SpecificationsRepository,
-} from '@modules/cars/repositories/implementations/SpecificationsRepository';
+} from '@modules/cars/infra/typeorm/repositories/SpecificationsRepository';
 
 import {
   ISpecificationsRepository,

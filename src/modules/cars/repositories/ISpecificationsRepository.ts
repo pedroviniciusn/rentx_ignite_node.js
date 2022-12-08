@@ -1,6 +1,6 @@
 import {
   Specification,
-} from '@modules/cars/entities/Specification';
+} from '@modules/cars/infra/typeorm/entities/Specification';
 
 import {
   ICreateSpecificationDTO,
