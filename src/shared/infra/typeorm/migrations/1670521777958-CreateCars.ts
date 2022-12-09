@@ -1,5 +1,4 @@
-import { type } from 'os';
-import {MigrationInterface, QueryRunner, Table} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreateCars1670521777958 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
