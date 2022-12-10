@@ -15,11 +15,13 @@ import { router } from './routes';
 
 import swaggerFile from '../../../swagger.json';
 
-import '../typeorm';
+import createConnection from '@shared/infra/typeorm/index';
 
 import '@shared/container';
 
 import { AppError } from '@shared/errors/AppError';
+
+createConnection();
 
 const app = express();
 
