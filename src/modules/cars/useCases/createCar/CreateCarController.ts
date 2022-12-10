@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import { Request, Response } from 'express';
+
 import { container } from 'tsyringe';
+
 import { CreateCarUseCase } from './CreateCarUseCase';
 
 class CreateCarController {
@@ -15,7 +17,6 @@ class CreateCarController {
       category_id,
     } = req.body;
 
-    console.log(req.body);
     const createCarUseCase = container.resolve(CreateCarUseCase);
 
     const car = await createCarUseCase.execute({
