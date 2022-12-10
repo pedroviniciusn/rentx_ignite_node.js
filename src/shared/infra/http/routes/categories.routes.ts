@@ -13,6 +13,8 @@ import {
 import {
   ListCategoryController,
 } from '@modules/cars/useCases/listCategories/ListCategoryController';
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
+import { ensureAdmin } from '../middlewares/ensureAdmin';
 
 const categoriesRoutes = Router();
 
@@ -26,6 +28,8 @@ const listCategoryController = new ListCategoryController();
 
 categoriesRoutes.post(
   '/',
+  ensureAuthenticated,
+  ensureAdmin,
   createCategoryController.handle,
 );
 
@@ -37,6 +41,8 @@ categoriesRoutes.get(
 categoriesRoutes.post(
   '/import',
   upload.single('file'),
+  ensureAuthenticated,
+  ensureAdmin,
   importCategoryController.handle,
 );
 
