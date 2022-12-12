@@ -38,7 +38,8 @@
 				{
 					"ts": "never"
 				}
-				]
+				],
+				"ignoreDestructuring": true 
 		},
 	  "settings": {
 	    "import/resolver": {
