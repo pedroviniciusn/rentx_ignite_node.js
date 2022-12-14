@@ -28,6 +28,14 @@ class CarsImagesRepository implements ICarsImagesRepository {
 
     return carImages;
   }
+
+  async findByCarId(car_id: string): Promise<CarImage[]> {
+    return await this.repository.find({
+      where: {
+        car_id: car_id
+      } 
+    })
+  }
 }
 
 export { CarsImagesRepository };

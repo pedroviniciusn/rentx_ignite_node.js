@@ -8,11 +8,11 @@ class UpdateUserAvatarCrontroller {
   async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.user;
 
-    const avatarFile = req.file.filename;
+    const avatar = req.file.filename;
 
     const updateUserAvatarUseCase = container.resolve(UpdateUserAvatarUseCase);
 
-    await updateUserAvatarUseCase.execute({ userId: id, avatarFile });
+    await updateUserAvatarUseCase.execute({ userId: id, avatarFile: avatar });
 
     return res.status(204).send();
   }
