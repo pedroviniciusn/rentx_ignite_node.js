@@ -5,16 +5,11 @@ import {
 import {
   IRentalRepository,
 } from '@modules/rentals/repositories/IRentalRepository';
+import { IDateProvider } from '@shared/container/providers/DateProviders/IDateProvider';
 
 import {
   AppError,
 } from '@shared/errors/AppError';
-
-import dayjs from 'dayjs';
-
-import utc from 'dayjs/plugin/utc';
-
-dayjs.extend(utc);
 
 interface IRequest {
   user_id: string;
@@ -25,6 +20,7 @@ class CreateRentalUseCase {
 
   constructor(
     private rentalRepository: IRentalRepository,
+    private dateProvider: IDateProvider,
   ) {}
 
   async execute({
@@ -50,14 +46,12 @@ class CreateRentalUseCase {
       throw new AppError('There is a rental in progress for user!');
     }
 
-    const expectedReturnDateFormat = dayjs(expected_return_date)
-    .utc()
-    .local()
-    .format();
+    const dateNow = this.dateProvider.dateNow();
 
-    const dateNow = dayjs().utc().local().format();
-
-    const compare = dayjs(expectedReturnDateFormat).diff(dateNow, 'hours');
+    const compare = this.dateProvider.compareInHours(
+      dateNow,
+      expected_return_date,
+    );
 
     if (compare < minimumHour) {
       throw new AppError('Invalid return time!')
