@@ -13,7 +13,9 @@ import {
 import {
   ListCategoryController,
 } from '@modules/cars/useCases/listCategories/ListCategoryController';
+
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
+
 import { ensureAdmin } from '../middlewares/ensureAdmin';
 
 const categoriesRoutes = Router();

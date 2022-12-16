@@ -1,3 +1,5 @@
+import { inject, injectable } from 'tsyringe';
+
 import {
   Rental,
 } from '@modules/rentals/infra/typeorm/entities/Rental';
@@ -14,7 +16,6 @@ import {
   AppError,
 } from '@shared/errors/AppError';
 
-import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
   user_id: string;

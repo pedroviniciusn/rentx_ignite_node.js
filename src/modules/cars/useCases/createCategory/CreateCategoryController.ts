@@ -10,7 +10,7 @@ class CreateCategoryController {
 
     await createCategoryUseCase.execute({ name, description });
 
-    return res.json({ message: 'Categoria criado com sucesso' });
+    return res.status(201).json({ message: 'Categoria criado com sucesso' });
   }
 }
 
