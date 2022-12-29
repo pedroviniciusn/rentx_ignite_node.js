@@ -79,83 +79,83 @@ describe('Create rental', () => {
   });
 
   it('Should not be able to create new rental if there is another open to the same user', async () => {
-    expect(async () => {
-      await createUserUseCase.execute({
-        name: 'user test',
-        email: 'email@test.com',
-        driverLicense: 'xxxxx',
-        password: 'hello world',
-      });
+    await createUserUseCase.execute({
+      name: 'user test',
+      email: 'email@test.com',
+      driverLicense: 'xxxxx',
+      password: 'hello world',
+    });
 
-      const car = await createCarUseCase.execute({
-        name: 'Car error',
-        description: 'Description car error',
-        daily_rate: 100,
-        license_plate: 'ABC-1000',
-        fine_amount: 60,
-        brand: 'Brand car',
-        category_id: 'category',
-      });
+    const car = await createCarUseCase.execute({
+      name: 'Car error',
+      description: 'Description car error',
+      daily_rate: 100,
+      license_plate: 'ABC-1000',
+      fine_amount: 60,
+      brand: 'Brand car',
+      category_id: 'category',
+    });
 
-      const user = await userRepositoryInMemory.findByEmail('email@test.com');
+    const user = await userRepositoryInMemory.findByEmail('email@test.com');
 
-      await createRentalUseCase.execute({
-        user_id: user.id,
-        car_id: car.id,
-        expected_return_date: dayAdd24Hours,
-      });
-
-      await createRentalUseCase.execute({
+    await createRentalUseCase.execute({
+      user_id: user.id,
+      car_id: car.id,
+      expected_return_date: dayAdd24Hours,
+    });
+    
+    await expect(
+      createRentalUseCase.execute({
         user_id: user.id,
         car_id: '8318041',
         expected_return_date: dayAdd24Hours,
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      }),
+    ).rejects.toEqual(new AppError('There is a rental in progress for user!'));
   });
 
   it('Should not be able to create new rental if there is another open to the same car', async () => {
-    expect(async () => {
-      const car = await createCarUseCase.execute({
-        name: 'Car error',
-        description: 'Description car error',
-        daily_rate: 100,
-        license_plate: 'ABC-1000',
-        fine_amount: 60,
-        brand: 'Brand car',
-        category_id: 'category',
-      });
-  
-      await createRentalUseCase.execute({
-        user_id: '123456',
-        car_id: car.id,
-        expected_return_date: dayAdd24Hours,
-      });
-  
-      await createRentalUseCase.execute({
+    const car = await createCarUseCase.execute({
+      name: 'Car error',
+      description: 'Description car error',
+      daily_rate: 100,
+      license_plate: 'ABC-1000',
+      fine_amount: 60,
+      brand: 'Brand car',
+      category_id: 'category',
+    });
+
+    await createRentalUseCase.execute({
+      user_id: '123456',
+      car_id: car.id,
+      expected_return_date: dayAdd24Hours,
+    });
+    
+    await expect(
+      createRentalUseCase.execute({
         user_id: '654321',
         car_id: car.id,
         expected_return_date: dayAdd24Hours,
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toEqual(new AppError('Car is unavailable'));
   });
 
   it('Should not be able to create new rental with invalid return time', async () => {
-    expect(async () => {
-      const car = await createCarUseCase.execute({
-        name: 'Car error',
-        description: 'Description car error',
-        daily_rate: 100,
-        license_plate: 'ABC-1000',
-        fine_amount: 60,
-        brand: 'Brand car',
-        category_id: 'category',
-      });
-  
-      await createRentalUseCase.execute({
+    const car = await createCarUseCase.execute({
+      name: 'Car error',
+      description: 'Description car error',
+      daily_rate: 100,
+      license_plate: 'ABC-1000',
+      fine_amount: 60,
+      brand: 'Brand car',
+      category_id: 'category',
+    });
+
+    await expect(
+      createRentalUseCase.execute({
         user_id: '123456',
         car_id: car.id,
         expected_return_date: dayjs().toDate(),
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toEqual(new AppError('Invalid return time!'));
   });
 });
