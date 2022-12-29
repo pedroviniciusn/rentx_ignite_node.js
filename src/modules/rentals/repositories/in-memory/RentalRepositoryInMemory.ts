@@ -37,7 +37,7 @@ class RentalRepositoryInMemory implements IRentalRepository {
   }
 
   async findByUserId(user_id: string): Promise<Rental[]> {
-    return this.rentals.find((rentals) => rentals.user_id = user_id);
+    return this.rentals.filter((rentals) => rentals.user_id = user_id);
   }
 
   async findOpenRentalByCar(car_id: string): Promise<Rental> {
