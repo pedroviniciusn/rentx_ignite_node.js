@@ -16,7 +16,7 @@ import {
 
 import {
   IDateProvider,
-} from '@shared/container/providers/DateProviders/IDateProvider';
+} from '@shared/container/providers/DateProvider/IDateProvider';
 
 import {
   AppError,

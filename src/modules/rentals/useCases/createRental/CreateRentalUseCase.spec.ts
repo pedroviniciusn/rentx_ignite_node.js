@@ -14,7 +14,7 @@ import {
 
 import {
   DayjsDateProvider,
-} from '@shared/container/providers/DateProviders/implementations/DayjsDateProvider';
+} from '@shared/container/providers/DateProvider/implementations/DayjsDateProvider';
 
 import {
   CarsRepositoryInMemory,
