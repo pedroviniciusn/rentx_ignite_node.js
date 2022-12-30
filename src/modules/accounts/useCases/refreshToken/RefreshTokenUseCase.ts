@@ -1,9 +1,26 @@
 import auth from '@config/auth';
-import { IUserTokensRepository } from '@modules/accounts/repositories/IUserTokensRepository';
-import { IDateProvider } from '@shared/container/providers/DateProviders/IDateProvider';
-import { AppError } from '@shared/errors/AppError';
-import { sign, verify } from 'jsonwebtoken';
-import { inject, injectable } from 'tsyringe';
+
+import {
+  inject,
+  injectable,
+} from 'tsyringe';
+
+import {
+  sign,
+  verify,
+} from 'jsonwebtoken';
+
+import {
+  IUserTokensRepository,
+} from '@modules/accounts/repositories/IUserTokensRepository';
+
+import {
+  IDateProvider,
+} from '@shared/container/providers/DateProviders/IDateProvider';
+
+import {
+  AppError,
+} from '@shared/errors/AppError';
 
 interface IPayLoad {
   sub: string;
