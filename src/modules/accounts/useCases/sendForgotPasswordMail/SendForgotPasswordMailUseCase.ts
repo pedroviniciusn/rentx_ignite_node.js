@@ -1,11 +1,26 @@
-import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
-import { IUserTokensRepository } from '@modules/accounts/repositories/IUserTokensRepository';
-import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider';
-import { IMailProvider } from '@shared/container/providers/MailProvider/IMailProvider';
-import { AppError } from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
+
 import { resolve } from 'path';
+
 import { v4 as uuidV4 } from 'uuid';
+
+import { AppError } from '@shared/errors/AppError';
+
+import {
+  IUsersRepository,
+} from '@modules/accounts/repositories/IUsersRepository';
+
+import {
+  IUserTokensRepository,
+} from '@modules/accounts/repositories/IUserTokensRepository';
+
+import {
+  IDateProvider,
+} from '@shared/container/providers/DateProvider/IDateProvider';
+
+import {
+  IMailProvider,
+} from '@shared/container/providers/MailProvider/IMailProvider';
 
 @injectable()
 class SendForgotPasswordMailUseCase {
@@ -51,7 +66,7 @@ class SendForgotPasswordMailUseCase {
 
     const variables = {
       name: user.name,
-      link: `${process.env.FORGOT_MAIL_URL}${token}`
+      link: `${process.env.FORGOT_MAIL_URL}${token}`,
     }
 
     await this.mailProvider.sendMail(
