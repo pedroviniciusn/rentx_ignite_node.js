@@ -13,15 +13,25 @@ import {
 import {
   AuthenticateUserUseCase,
 } from '@modules/accounts/useCases/authenticateUser/AuthenticateUserUseCase';
+import { UserTokensRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UserTokensRepositoryInMemory';
+import { DayjsDateProvider } from '@shared/container/providers/DateProvider/implementations/DayjsDateProvider';
 
 let userRepositoryInMemory: UserRepositoryInMemory;
+let userTokensRepositoryInMemory: UserTokensRepositoryInMemory;
 let authenticateUserUseCase: AuthenticateUserUseCase;
 let createUserUseCase: CreateUserUseCase;
+let dateProvider: DayjsDateProvider;
 
 describe('Authenticate User', () => {
   beforeEach(() => {
     userRepositoryInMemory = new UserRepositoryInMemory();
-    authenticateUserUseCase = new AuthenticateUserUseCase(userRepositoryInMemory);
+    userTokensRepositoryInMemory = new UserTokensRepositoryInMemory();
+    dateProvider = new DayjsDateProvider();
+    authenticateUserUseCase = new AuthenticateUserUseCase(
+      userRepositoryInMemory,
+      userTokensRepositoryInMemory,
+      dateProvider,
+    );
     createUserUseCase = new CreateUserUseCase(userRepositoryInMemory);
   });
 
