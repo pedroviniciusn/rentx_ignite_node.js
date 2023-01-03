@@ -28,7 +28,7 @@ import {
 
 const carsRoutes = Router();
 
-const uploadCarImages = multer(uploadConfig.upload('./tmp/carsImages'));
+const uploadCarImages = multer(uploadConfig);
 
 const createCarController = new CreateCarController();
 const createSpecificationController = new CreateCarSpecificationController();

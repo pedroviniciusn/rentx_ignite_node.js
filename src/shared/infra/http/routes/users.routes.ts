@@ -19,7 +19,7 @@ import {
 
 const usersRoutes = Router();
 
-const uploadAvatar = multer(uploadConfig.upload('./tmp/avatar'));
+const uploadAvatar = multer(uploadConfig);
 
 const createUserCrotroller = new CreateUserController();
 const updateUserAvatarCrontroller = new UpdateUserAvatarCrontroller();

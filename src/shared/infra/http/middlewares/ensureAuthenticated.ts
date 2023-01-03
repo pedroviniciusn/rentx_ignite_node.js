@@ -4,10 +4,6 @@ import { verify } from 'jsonwebtoken';
 
 import { AppError } from '@shared/errors/AppError';
 
-import {
-  UserTokensRepository,
-} from '@modules/accounts/infra/typeorm/repositories/UserTokensRepository';
-
 import auth from '@config/auth';
 
 interface IPayload {
