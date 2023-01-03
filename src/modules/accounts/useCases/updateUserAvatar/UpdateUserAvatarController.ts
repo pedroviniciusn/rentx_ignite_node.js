@@ -10,8 +10,6 @@ class UpdateUserAvatarCrontroller {
 
     const avatar = req.file.filename;
 
-    console.log(avatar)
-
     const updateUserAvatarUseCase = container.resolve(UpdateUserAvatarUseCase);
 
     await updateUserAvatarUseCase.execute({ userId: id, avatarFile: avatar });
