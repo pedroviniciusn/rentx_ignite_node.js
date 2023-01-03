@@ -17,8 +17,6 @@ interface IPayload {
 export async function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
 
-  const userTokensRepository = new UserTokensRepository();
-
   if (!authHeader) {
     throw new AppError('Token missing', 401);
   }
@@ -28,17 +26,8 @@ export async function ensureAuthenticated(req: Request, res: Response, next: Nex
   try {
     const { sub: userId } = verify(
       token,
-      auth.secret_refresh_token
+      auth.secret_token
     ) as IPayload;
-
-    const user = await userTokensRepository.findByUserIdAndRefreshToken(
-      userId,
-      token
-    );
-
-    if (!user) {
-      throw new AppError('User does not exists', 401);
-    }
 
     req.user = {
       id: userId,
