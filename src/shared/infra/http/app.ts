@@ -21,6 +21,7 @@ import createConnection from '@shared/infra/typeorm/index';
 import '@shared/container';
 
 import { AppError } from '@shared/errors/AppError';
+import upload from '@config/upload';
 
 createConnection();
 
@@ -29,6 +30,9 @@ const app = express();
 app.use(express.json());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+app.use('/avatar', express.static(`${upload.tmpFolder}/avatar`));
+app.use('/carsImages', express.static(`${upload.tmpFolder}/carsImages`));
 
 app.use(router);
 

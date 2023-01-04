@@ -16,6 +16,7 @@ import {
 import {
   ensureAuthenticated,
 } from '@shared/infra/http/middlewares/ensureAuthenticated';
+import { ProfileUserController } from '@modules/accounts/useCases/profileUser/ProfileUserController';
 
 const usersRoutes = Router();
 
@@ -23,6 +24,7 @@ const uploadAvatar = multer(uploadConfig);
 
 const createUserCrotroller = new CreateUserController();
 const updateUserAvatarCrontroller = new UpdateUserAvatarCrontroller();
+const profileUserController = new ProfileUserController();
 
 usersRoutes.post(
   '/',
@@ -35,5 +37,11 @@ usersRoutes.patch(
   uploadAvatar.single('avatar'),
   updateUserAvatarCrontroller.handle,
 );
+
+usersRoutes.get(
+  '/profile',
+  ensureAuthenticated,
+  profileUserController.handle
+)
 
 export { usersRoutes };

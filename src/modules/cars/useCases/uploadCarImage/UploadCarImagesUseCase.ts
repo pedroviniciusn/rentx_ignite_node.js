@@ -6,6 +6,9 @@ import {
 
 import { deleteFile } from '@utils/file';
 
+import { IStorageProvider } from '@shared/container/providers/StorageProvider/IStorageProvider';
+import { CarImage } from '@modules/cars/infra/typeorm/entities/CarImage';
+
 interface IRequest {
   car_id: string;
   images_name: string[];
@@ -16,6 +19,9 @@ class UploadCarImagesUseCase {
   constructor(
     @inject('CarsImagesRepository')
     private carsImageRepository: ICarsImagesRepository,
+
+    @inject('StorageProvider')
+    private storageProvider: IStorageProvider,
   ) {}
 
   async execute({car_id, images_name}: IRequest): Promise<void> {
@@ -24,14 +30,16 @@ class UploadCarImagesUseCase {
     if (!carImage) {
       images_name.map(async (image) => {
         await this.carsImageRepository.create(car_id, image);
+        await this.storageProvider.save(image, 'carsImages');
       });
     } else if (carImage) {
       carImage.map(async (car) => {
-        await deleteFile(`./tmp/carsImages/${car.image_name}`);
+        await this.storageProvider.delete(car.image_name, 'carsImages');
       });
-  
+
       images_name.map(async (image) => {
         await this.carsImageRepository.create(car_id, image);
+        await this.storageProvider.save(image, 'carsImages');
       });
     }
   }
