@@ -2,6 +2,8 @@ import 'reflect-metadata';
 
 import 'dotenv/config';
 
+import cors from 'cors';
+
 import express, {
   NextFunction,
   Request,
@@ -21,7 +23,9 @@ import createConnection from '@shared/infra/typeorm/index';
 import '@shared/container';
 
 import { AppError } from '@shared/errors/AppError';
+
 import upload from '@config/upload';
+
 
 createConnection();
 
@@ -34,6 +38,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use('/avatar', express.static(`${upload.tmpFolder}/avatar`));
 app.use('/carsImages', express.static(`${upload.tmpFolder}/carsImages`));
 
+app.use(cors());
 app.use(router);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
